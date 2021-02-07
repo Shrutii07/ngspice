@@ -1,0 +1,16 @@
+*dual_clipper
+*clipper circuit which clips the voltage above +3V and below -3V
+
+v1 1 0 sin(0 5 100 0 0 0)
+r1 1 2 9.9k
+d1 2 4 D_shru
+v2 4 0 dc 2.4
+d2 5 2 D_shru
+v3 0 5 dc 2.4
+.model D_shru D
+.tran 1u 40m
+.control
+run
+plot v(1) v(2)
+.endc
+.end
