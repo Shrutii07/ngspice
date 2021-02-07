@@ -1,0 +1,66 @@
+# A+B
+va 1 0  pulse(0 5v 0 0 0 10ms 20ms)
+vb 3 0  0 pulse(0 5v 0 0 0 20ms 40ms)
+d1 1 2 D_shru
+d2 3 2 D_shru
+R1 2 0 9.9K
+.model D_shru D(Is=1E-16 vj=0.7)
+.tran 0.01ms 60ms
+.options savecurrents
+.control
+run
+plot v(1) v(3)+10  v(2)+20
+.endc
+.end
+
+* A.B
+va 1 0  pulse(0 5v 0 0 0 10ms 20ms)
+vb 2 0  0 pulse(0 5v 0 0 0 20ms 40ms)
+d1 3 1 D_shru
+d2 3 2 D_shru
+R1 3 4 9.9K
+V 4 0 dc 5V
+.model D_shru D(Is=1E-16 vj=0.7)
+.tran 0.01ms 60ms
+.options savecurrents
+.control
+run
+plot v(1) v(2)+10 v(3)+20
+.endc
+.end
+
+* A+BC
+va 6 0 pulse(0 5v 0 0 0 10ms 20ms)
+vb 1 0 pulse(0 5v 0 0 0 20ms 40ms)
+vc 2 0 pulse(0 5v 0 0 0 30ms 60ms)
+d1 3 1 D_shru
+d2 3 2 D_shru
+r2 3 4 9.9K
+v2 4 0 10v
+d3 3 5 D_shru
+d4 6 5 D_shru
+r3 5 0 9.9K
+.model D_shru D
+.control
+tran 10us 60ms
+plot V(6) v(1)+10 v(2)+20 V(5)+30
+.endc
+.end
+
+
+* A+B+C
+va 1 0 pulse(0 5v 0 0 0 20ms 40ms)
+vb 2 0 pulse(0 5v 0 0 0 20ms 40ms)
+vc 3 0 pulse(0 5v 0 0 0 40ms 80ms)
+d1 1 4 D_shru
+d2 2 4 D_shru
+d3 3 4 D_shru
+r1 4 0 9.9k
+.model D_shru D
+.tran 10u 80m
+.control
+run
+plot v(1) v(2)+10 v(3)+20 v(4)+30
+.endc
+.end
+
