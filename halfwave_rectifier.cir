@@ -1,0 +1,17 @@
+*half wave 
+
+v1 1 0 sin(0 2 100 0 0 0)
+*d01 1 2 mydiode  * forward
+
+d01 2 1 mydiode		* reverse
+r1 2 0 1k
+.model mydiode D(Is = 1E-16 vj = 0.7)
+
+*step of 1usec, total time 40ms
+.tran 1u 40m
+.control
+run
+plot v(1)
+plot v(2)
+.endc
+.end
