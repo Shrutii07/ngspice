@@ -1,0 +1,14 @@
+*Positive clipper
+
+v1 1 0 sin(0 5 100 0 0 0)
+r1 2 4 9.9k
+d1 2 1 D_shru
+v2 4 0 dc 2.4
+.model D_shru D
+.tran 1u 40m
+.control
+run
+plot v(1) 
+plot v(2)
+.endc
+.end
