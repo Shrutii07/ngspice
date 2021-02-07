@@ -1,0 +1,14 @@
+*clamper
+* Clamper Circuit which Clamps the Voltage above the -9V
+v1 1 0 sin(0 10 100 0 0 0)
+c1 1 2 1mF
+d1 3 2 D_shru
+vd 3 0 dc 0.3
+r1 2 0 9.9k
+.model D_shru D
+.tran 1u 40m
+.control
+run
+plot v(1) v(2)
+.endc
+.end
