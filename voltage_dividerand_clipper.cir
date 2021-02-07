@@ -1,0 +1,24 @@
+* Voltage Divider and Clipper
+
+Vin n0 0 SIN(0 10 50)
+R1  n0 n1   2k
+R2  n1 0    1k
+D1  n1 n2 D_shru
+R3  n2 n3 1K
+V1  n3 0 dc 0.4
+D2 n4 n1 D_shru
+R4 n4 n5 2K
+V2 0 n5 dc 0.4
+D3 n1 n6 D_shru
+V3 n6 0 dc 3.4
+D4 n7 n1 D_shru
+V4 0 n7 dc 4.4
+
+.MODEL D_shru D
+.control
+DC Vin -25 25 0.5
+* DC sweep on X axis from -25 to +25 Volts
+
+plot V(n1) vs V(n0)
+.endc
+.end
