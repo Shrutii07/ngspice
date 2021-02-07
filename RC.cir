@@ -1,0 +1,32 @@
+*rc ckt DC analysis
+
+vin 1 0 dc 0 ac 5
+r 1 2 500
+c 2 0 1F
+
+.dc vin 0 5.0 0.25 
+.control 
+run 
+plot v(2)
+plot v(1,2)
+
+.endc 
+.end
+
+
+*rc ckt AC analysis
+
+vin 1 0 dc 0 ac 5
+r 1 2 500
+c 2 0 1u
+
+.ac dec 10 10 100Khz
+.control 
+run 
+plot vdb(2) xlog
+plot vp(2) xlog
+plot -i(vin)
+plot v(2)
+
+.endc 
+.end
