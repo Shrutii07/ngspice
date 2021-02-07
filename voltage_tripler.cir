@@ -1,0 +1,16 @@
+*tripler
+
+v1 1 0 sin(0 5 100 0 0 0)
+c1 1 2 9.9uF
+d1 2 0 D_shru
+c2 0 5 9.9uF
+d2 5 2 D_shru
+c3 2 4 9.9uF
+d3 4 5 D_shru
+.model D_shru D
+.tran 1u 300m
+.control
+run
+plot v(1) v(1, 4)
+.endc
+.end
