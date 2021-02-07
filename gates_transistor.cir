@@ -1,0 +1,80 @@
+*A.B
+
+v1 1 0  pulse(0 5v 0 0 0 30ms 40ms)
+v2 2 0  pulse(0 5v 0 0 0 10ms 20ms)
+q1 3 4 5 mybjt
+q2 5 6 7 mybjt
+r1 1 4 9K
+r2 2 6 9K
+r3 7 0 999K
+vdc 3 0 dc 9
+.model mybjt npn
+.tran 0.01ms 60ms
+.options savecurrents
+.control
+run
+plot v(1) v(2)+10 v(7)+20
+.endc
+.end
+
+* A` + B`(NAND)
+
+vina A 0 PULSE(0 4 0 0 0 5m 15m)
+vinb B 0 PULSE(0 4 0 0 0 10m 20m)
+q1 2 4 3 t546 
+q2 3 5 0 t546 
+r1 A 4 10K
+r2 B 5 10K 
+rl 1 2 900
+Vdc1 1 0 dc 6
+.model t546 npn(IS=1E-15)
+.control
+tran 10u 160m
+plot v(A) v(B) + 5 V(2) + 10
+.endc
+.end
+
+* A + BC
+V_bias  bias 0  DC 9
+Vin_c   n1 0    PULSE(0 5 0 0 0 05m 10m)
+Vin_b   n2 0    PULSE(0 5 0 0 0 10m 20m)
+Vin_a   n3 0    PULSE(0 5 0 0 0 20m 40m)
+Rin_c   n1 b1   10K
+Rin_b   n2 b2   10K
+Rin_a   n3 b3   10K
+Q1  bias b1 intr my_BJT
+Q2  intr b2 out1 my_BJT
+R1  out1 0  100G
+Q3  bias out1 out my_BJT
+Q4  bias b3 out my_BJT
+R2  out 0   1000K
+
+.MODEL my_BJT npn is=1e-15
+.tran 1u 80m
+.control
+run
+plot v(n1) v(n2)+10 v(n3)+20 v(out)+30
+.endc
+.end
+
+* A + B + C
+V_bias  bias 0  DC 9
+
+Vin_a   n1 0    PULSE(0 5 0 0 0 05m 10m)
+Vin_b   n2 0    PULSE(0 5 0 0 0 10m 20m)
+Vin_c   n3 0    PULSE(0 5 0 0 0 20m 40m)
+Rin_a   n1 b1   10K
+Rin_b   n2 b2   10K
+Rin_c   n3 b3   10K
+Q1  bias b1 out my_BJT
+Q2  bias b2 out my_BJT
+Q3  bias b3 out my_BJT
+RL  out 0   100G
+
+.MODEL my_BJT npn is=1e-15
+.tran 1u 80m    * Transient response in steps of 1us and upto 80 ms
+.control
+run
+plot v(n1) v(n2)+10 v(n3)+20 v(out)+30
+.endc
+.end
