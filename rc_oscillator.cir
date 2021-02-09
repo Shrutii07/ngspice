@@ -1,0 +1,32 @@
+* RC Phase Shift oscillator at 2.2 kHz
+.MODEL NPN_S npn is=1e-15
+
+Vb  1 0 DC 9
+
+Q1  nc nb 0 NPN_S
+
+RC  1 nc    1K
+Ra  nc nb   100K
+Rb  nb 0    470K
+Cb  nc n1   10u
+Co  nc out  10u
+
+R1  n1 0    590.6793949
+C1  n1 n2   50n
+
+R2  n2 0    590.6793949
+C2  n2 n3   50n
+
+R3  n3 0    590.6793949
+C3  n3 nb   50n
+
+RL  out 0   10G
+CL  out 0   10p
+
+
+.tran 1u 25m 8m  * Transient response in steps of 1microS, from 8mS to 25mS
+.control
+run
+plot v(out)
+.endc
+.end
