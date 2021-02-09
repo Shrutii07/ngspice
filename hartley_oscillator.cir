@@ -1,0 +1,25 @@
+* Hartley oscillator at 2.2 kHz
+.MODEL NPN_Shru npn is=1e-15
+
+Vb  1 0 DC 12
+
+Q1  nc nb ne NPN_Shru
+
+Rc  1 nc    1K
+Re  ne 0    10K
+Ce  ne 0    10n
+Ra  1 nb    10K
+Rb  nb 0    4.7K
+Cb  2 nb    10p
+
+Co  nc out  10p
+L1  out 0   20m
+Ct  out 2   87.22n
+L2  2 0     40m
+
+.tran 1u 100u 20u *Transient response in steps of 1uS, from 20uS to 100uS
+.control
+run		
+plot v(out)
+.endc		
+.end		
