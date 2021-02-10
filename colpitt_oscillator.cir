@@ -24,6 +24,3 @@ run
 plot v(3)
 .endc		
 .end
-
-
-
