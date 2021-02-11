@@ -1,0 +1,18 @@
+*Common Emmitter Amplifie: operating point
+
+vbb 1 0 dc 3.7
+R1 5 2 68k
+R2 2 0 10K
+Rc 4 5 10k
+vcc 5 0 dc 12v
+Q1 4 2 3 d_BJT
+Re 3 0 1k
+
+.model d_BJT npn bf = 60
+.op
+.control
+run
+print v(4,3) 
+print v(5,4)/5k 
+.endc
+.end
