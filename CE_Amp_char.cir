@@ -1,0 +1,22 @@
+*Common Emmitter Amplifier: input-output Char
+
+vbb 1 0 dc 3.7
+*R1 5 2 5k
+R2 2 1 5K
+Rc 4 5 1k
+vcc 5 0 dc 12v
+Q1 4 2 3 d_BJT
+Re 3 0 1k
+
+.model d_BJT npn bf = 60
+.options savecurrents
+.control
+run
+dc vbb 0 3 0.01
+plot v(1,2)/5K  vs v(2,3)
+.endc
+.control
+dc vcc 0 8 0.02
+plot -@Rc[i] vs v(4,3)
+.endc
+.end
