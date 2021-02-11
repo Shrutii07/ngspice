@@ -1,0 +1,21 @@
+*CE Amplifier
+vin 1 0 dc 0 ac sine(0 5mV 100 0 0 0)
+c1 1 2 10u
+vcc 3 0 dc 5
+r1 2 3 68k
+r2 2 0 10k
+r3 3 4 10k
+
+q1 4 2 ne BJT_Shru
+re ne 0 1K
+ce ne 0 10u
+c2 4 5 10u
+rload 5 0 100k
+
+.model BJT_Shru npn is=1e-15
+.tran 0.1u 20m
+.control
+run
+plot v(1) v(5) title 'CE Amplifier'
+.endc
+.end
