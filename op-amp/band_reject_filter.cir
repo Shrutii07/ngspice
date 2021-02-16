@@ -1,0 +1,24 @@
+*bandrejectfilter opamp
+.include LF356.MOD
+
+V1  1 0     DC 0 AC 1
+C1  1 pi    10n
+R1  1 ni    7.23431K
+R3  pi 0    7.23431K
+
+R2  ni 2    7.23431K
+C2  2 out   10n
+
+R4  1 out   7.23431K
+
+Vcc vp 0    DC 12
+Vee vn 0    DC -12
+
+X1  pi ni vp vn 2  LF356/NS
+
+.ac dec 100 1 1Meg   * AC sweep from 100Hz to 1MHz in steps of 1Hz
+.control
+run
+plot db(v(out))
+.endc
+.end
