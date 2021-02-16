@@ -1,0 +1,25 @@
+*integrator opamp
+
+.include LF356.MOD
+
+vin 1 0 PULSE(-5 5 0 0 0 0.2272m 0.4545m)
+*vin 1 0 sine(0 5 2.2K 0 0 0)
+*Uncomment any one of the above two lines to use sine or square input
+
+ri 1 3 723.431
+rf 3 4 1K
+cf 3 4 0.1u
+
+vcc 5 0 12
+vdd 6 0 -12
+
+Rl 4 0 10G
+
+XU1 0 3 5 6 4 LF356/NS
+
+.tran 1u 10m 8m
+.control
+run
+plot v(1) v(4)
+.endc
+.end
