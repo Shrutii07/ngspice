@@ -1,0 +1,26 @@
+*differentiator using op-amp
+
+vin 1 0 sin(0 5 2.2K)
+*Vin 1 0 PULSE(0 5 0 0 0 05m 10m)
+*Uncomment any one of the above two lines to use sine or square input
+
+vdc1 4 0 12
+vdc2 5 0 -12
+
+r1 1 2 5K
+c1 2 3 10n
+
+r2 3 6 1K
+c2 3 6 10p
+
+.include LF356.MOD
+XU1 0 3 4 5 6 LF356/NS
+
+*.tran 1us 10ms 8ms *for sine
+.trans 1us 40ms *for pulse
+.options savecurrents
+.control
+run
+plot v(1) v(6)
+.endc
+.end
