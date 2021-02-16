@@ -1,0 +1,24 @@
+*inverting summer opamp
+.include LF356.MOD
+
+Va 1 0 PULSE(0 5 0 0 0 10m 20m)
+Vb 2 0 PULSE(0 5 0 0 0 20m 40m)
+Vc 3 0 PULSE(0 5 0 0 0 40m 80m)
+
+r1 1 4 1K
+r2 2 4 1K
+r3 3 4 1K
+r4 7 0 250
+r5 4 8 1K
+
+vcc 5 0 17
+vdd 6 0 -17
+
+XU1 7 4 5 6 8 LF356/NS
+
+.tran 10u 80m
+.control
+run
+plot v(1) v(2)+10 v(3)+20 v(8)+60
+.endc
+.end
