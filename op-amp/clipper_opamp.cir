@@ -1,0 +1,22 @@
+*clipper OpAmp
+
+.include LF356.MOD
+Vin 1 0 sin(0 5 50)
+
+R 2 6 10k
+D1 2 5 D_shru   *positive clipper
+D1 5 2 D_shru   *negative clipper
+*Vr 6 0 2v	*vref for + clipper
+Vr 6 0 -2V 	*vref for - clipper
+
+Vp 3 0 12v
+Vn 4 0 -12v
+XU1 1 2 3 4 5 LF356/NS
+
+.model D_shru D
+.tran 0.1m 100m
+.control
+run
+plot v(1) v(2)
+.endc
+.end
