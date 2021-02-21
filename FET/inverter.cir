@@ -1,0 +1,14 @@
+*CMOS inverter
+vin 1 0 pulse(0v 5v 0 1ns 1ns 40ns 80ns)
+vdd 3 0 dc 5v
+*MXXXXXXX nd ng ns nb mname
+m1 3 1 2 3 mos_shru l=1u w=100u
+.model mos_shru pmos vto=-1v kp=80u
+m2 2 1 0 0 mos_Shru l=1u w=40u
+.model mos_Shru nmos vto=1v kp=200u
+.tran 10ns 200ns
+.control
+run
+plot v(1) v(2)+10 title 'CMOS inverter' xlabel 'time'
+.endc
+.end
