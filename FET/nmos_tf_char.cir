@@ -1,0 +1,14 @@
+*nmos tran
+
+v1 3 0 dc 5v
+v2 3 2 dc 0v
+v3 1 0 dc 5v
+*MXX nd ng ns nb mname
+MN 2 1 0 0 Mos_Shru
+.model Mos_Shru NMOS
+.dc v3 0 10 1m
+.control
+run
+plot i(v2) vs v(1) ylabel 'Ids' xlabel 'Vgs' title 'Transfer Characteristics'
+.endc
+.end
