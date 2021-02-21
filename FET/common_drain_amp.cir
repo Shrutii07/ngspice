@@ -1,0 +1,24 @@
+*common drain amplifier
+*v1 1 0 ac=1 dc=1   for gain
+v1 1 0 sine(0 4 500)
+r1 1 2 1k
+c1 2 3 1u
+*JX nd ng ns mname
+J1 4 3 5 fet_shru
+rd 4 6 22k
+vcc 6 0 12v
+r2 6 3 2.2mega
+r3 3 0 1.5mega
+r4 5 0 12k
+c3 5 7 1u
+r5 7 0 100k
+c4 4 0 1u
+.model fet_shru NJF
+*.ac dec 100 1 100k   for gain plot
+.tran 1u 10ms
+.control
+run
+plot v(1) v(7) * plot ip op
+* plot db(v(7))   plot gain
+.endc
+.end 
