@@ -1,0 +1,22 @@
+*pmos drain and tf char
+
+vgs 1 0 8v
+M1 2 1 0 2 Mos_shru
+vdd 3 2 0v
+vd 3 0 5v
+.model Mos_shru pmos
+
+*.dc vd 0 15 1m vgs 2 8 1    
+* uncomment above for drain char
+* uncomment below  for transfer char
+.dc vgs 0 5 1    
+
+.control
+run
+Set Xbrushwidth=2
+
+*plot i(vdd) ylabel 'Ids' xlabel 'Vds' title 'Drain Characteristics'
+plot i(vdd) vs v(1) ylabel 'Ids' xlabel 'Vgs' title 'Transfer Characteristics'
+
+.endc
+.end
