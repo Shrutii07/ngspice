@@ -26,6 +26,7 @@ r5 11 0 1.2k
 
 .model bjtn npn
 .model bjtp pnp
+
 .tran 0.00002m 30m
 .control
 run
