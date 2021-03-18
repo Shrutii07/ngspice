@@ -21,6 +21,6 @@ R6 4 0 3.3K
 .tran 1u 10m 8m
 .control
 run
-plot v(1) v(9)
+plot v(1) vs v(9)
 .endc
 .end
