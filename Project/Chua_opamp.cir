@@ -1,0 +1,27 @@
+*Chua OPAMP
+
+.include LF356.MOD
+V1 2 0 dc 9
+V2 5 0 dc -9
+
+L 1 0 0.018
+C1 1 0 100n
+C2 9 0 10n
+R 1 9 1.5K
+
+XU1 9 4 2 5 6 LF356/NS
+XU2 9 7 2 5 8 LF356/NS
+R1 8 9 22K
+R2 8 7 22K
+R3 7 0 2.2K
+R4 6 9 22K
+R5 6 4 22K
+R6 4 0 3.3K
+
+.tran 1u 10m 8m
+.control
+run
+plot v(1) v(9)
+plot i(R) v(1)
+.endc
+.end
