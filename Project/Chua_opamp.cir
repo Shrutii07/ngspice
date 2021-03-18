@@ -22,6 +22,5 @@ R6 4 0 3.3K
 .control
 run
 plot v(1) v(9)
-plot i(R) v(1)
 .endc
 .end
