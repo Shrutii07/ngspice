@@ -28,5 +28,9 @@ SET COLOR4 = brown
 Set XbrushWidth = 2
 run
 plot v(1) vs v(9)
+plot V(1) V(9)
+linearize
+fft V(1) V(9)
+plot V(1) V(9) xlimit 0 20kHz
 .endc
 .end
