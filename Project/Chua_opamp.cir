@@ -18,8 +18,14 @@ R4 6 9 22K
 R5 6 4 22K
 R6 4 0 3.3K
 
-.tran 1u 10m 8m
+.tran 1u 100m
 .control
+SET COLOR0 = white
+SET COLOR1 = black
+SET COLOR2= red
+SET COLOR3= blue
+SET COLOR4 = brown
+Set XbrushWidth = 2
 run
 plot v(1) vs v(9)
 .endc
