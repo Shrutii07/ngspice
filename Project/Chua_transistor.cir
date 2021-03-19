@@ -27,9 +27,16 @@ r5 11 0 1.2k
 .model bjtn npn
 .model bjtp pnp
 
-.tran 0.00002m 30m
+.tran 1u 100m
 .control
+SET COLOR0 = white
+SET COLOR1 = black
+SET COLOR2= red
+SET COLOR3= blue
+SET COLOR4 = brown
+Set XbrushWidth = 2
 run
 plot v(1) vs v(2)
+plot v(1) V(2)
 .endc
 .end
