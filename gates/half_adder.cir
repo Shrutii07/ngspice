@@ -1,0 +1,34 @@
+* half adder pmos nmos
+
+* Tite : Half Adder using MOS
+va 1 0 PULSE(0 5 0 0 0 5m 10m)
+vb 3 0 PULSE(0 5 0 0 0 10m 20m)
+vcc 5 0 dc 5v
+mp1 2 1 5 5 mosp
+mp2 4 3 5 5 mosp
+mp3 7 2 5 5 mosp
+mp4 6 1 5 5 mosp
+mp5 8 3 7 7 mosp
+mp6 8 4 6 6 mosp
+mp7 11 1 5 5 mosp
+mp8 11 3 5 5 mosp
+mp9 13 11 5 5 mosp
+mn1 2 1 0 0 mosn
+mn2 4 3 0 0 mosn
+mn3 8 2 10 0 mosn
+mn4 8 1 9 0 mosn
+mn5 10 4 0 0 mosn
+mn6 9 3 0 0 mosn
+mn7 11 1 12 0 mosn
+mn8 12 3 0 0 mosn
+mn9 13 11 0 0 mosn
+.model mosn nmos
+.model mosp pmos
+
+.tran 1u 30m
+.control 
+run
+plot v(1) v(3) + 10 v(8) + 16 v(13) + 22
+.endc
+.end
+
