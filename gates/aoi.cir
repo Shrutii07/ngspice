@@ -1,0 +1,39 @@
+* Title : GATE USING MOSFET
+
+va 1 0 PULSE(0 4 0 0 0 5m 15m)
+vb 2 0 PULSE(0 4 0 0 0 10m 20m)
+vc 3 0 PULSE(0 4 0 0 0 15m 20m)
+
+v5 d5 0 dc 5v
+
+M1 d5 2 4 d5 mos1
+M2 d5 3 4 d5 mos2
+M3 4 1 5 4 mos3
+
+M4 5 1 0 0 mos4
+M5 5 2 6 0 mos5
+M6 6 3 0 0 mos6
+
+
+
+.model mos1 pmos
+.model mos2 pmos
+.model mos3 pmos
+.model mos4 nmos
+.model mos5 nmos
+.model mos6 nmos
+
+.tran 5u 50m
+.control 
+run
+set color0 = white
+set color1 = black
+set color2 = blue
+set color3 = green
+set color4 = magenta 
+set color5 = red
+
+Set XbrushWidth = 2.5
+plot v(1) v(2) + 5 v(3) + 10  v(5) + 15
+.endc
+.end
