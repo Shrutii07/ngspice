@@ -1,0 +1,48 @@
+*3ip and using 2ip nand
+
+va a 0 PULSE(0 9.9 0 1u 1u 10m 15.1m)
+vb b 0 PULSE(9.9 0 0 1u 1u 20m 35.2m)
+vc c 0 PULSE(0 9.9 0 1u 1u 40m 75.3m)
+
+.subckt cmos_2nand in1 in2 res
+* name port1 port2  ...
+	.model MOSN NMOS level=8 version=3.3.0
+	.model MOSP PMOS level=8 version=3.3.0
+	* transistor models
+
+	vdd d 0 dc 10
+	*biasing voltage
+
+
+	r1 in1 1 1k
+	r2 in2 2 1k
+	r4 10 res 1k
+	* resistors
+
+	m1 10 1 d d MOSP
+	m2 10 2 d d MOSP
+	m4 10 2 11 0 MOSN
+	m5 11 1 0 0 MOSN
+	
+	* mn drain gate source bulk model
+	* nmos bulk to ground, pmos bulk to vdd
+.ends cmos_2nand
+
+x1 a b c1 cmos_2nand
+x2 c1 c1 c2 cmos_2nand
+x3 c c2 c3 cmos_2nand
+x4 c3 c3 out cmos_2nand
+
+.tran 10u 160m
+.control
+run
+set color0 = white
+set color1 = black
+set color2 = blue
+set color3 = green
+set color4 = red
+set color5 = violet
+plot v(a) v(b)+20  v(c)+40 v(out)+60
+
+.endc
+.end
