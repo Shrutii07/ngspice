@@ -1,0 +1,48 @@
+SR Flip Flop
+
+vclk clk 0 PULSE(0 5 0 0 0 5m 10m)
+vs s 0 PULSE(0 9.9 0 0 0 2.5m 20m)
+vr r 0 PULSE(0 9.9 0 0 0 7.5m 30m)
+
+.subckt flipFlop s r clk q notq
+	vdd vd 0 5
+
+	mp1 vd r n1 vd PFET
+	mp2 vd clk n1 vd PFET
+	mp3 n1 notq q vd PFET
+
+	mn1 q r n2 0 NFET
+	mn2 n2 clk 0 0 NFET
+	mn3 q notq 0 0 NFET
+
+	mp4 vd s n3 vd PFET
+	mp5 vd clk n3 vd PFET
+	mp6 n3 q notq vd PFET
+
+	mn4 notq s n4 0 NFET
+	mn5 n4 clk 0 0 NFET
+	mn6 notq q 0 0 NFET
+
+
+	.model PFET PMOS
+	.model NFET NMOS
+.ends
+
+Xu1 s r clk q notq flipFlop
+
+.tran 1u 80m
+.control
+run
+
+set color0=black
+set color1=white
+set color2=red
+set color3=blue
+set color4=green
+set color5 = violet
+set color6 = yellow
+
+plot v(clk) v(s)+10 v(r)+25 v(q)+40 v(notq)+55 
+
+.endc
+.end
