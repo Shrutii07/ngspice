@@ -1,0 +1,74 @@
+*XOR using nand
+
+va a 0 PULSE(0 9.9 0 1u 1u 10m 15m)
+vb b 0 PULSE(9.9 0 0 1u 1u 20m 35m)
+
+.subckt cmos_2nand in1 in2 res
+* name port1 port2  ...
+	.model MOSN NMOS level=8 version=3.3.0
+	.model MOSP PMOS level=8 version=3.3.0
+	* transistor models
+
+	vdd d 0 dc 10
+	*biasing voltage
+
+	r1 in1 1 1k
+	r2 in2 2 1k
+	
+	
+	r4 10 res 1k
+	* resistors
+
+	m1 10 1 d d MOSP
+	m2 10 2 d d MOSP
+	
+	
+	
+	m4 10 2 11 0 MOSN
+	m5 11 1 0 0 MOSN
+	
+	* mn drain gate source bulk model
+	* nmos bulk to ground, pmos bulk to vdd
+.ends cmos_2nand
+
+.subckt cmos_and i1 i2 res
+* name port1 port2 port3 ...
+	.model MOSN NMOS level=8 version=3.3.0
+	.model MOSP PMOS level=8 version=3.3.0
+	
+	vdd d 0 dc 10
+	
+	r1 5 res 1k
+	r2 i1 1 1k
+	r3 i2 2 1k
+	r4 3 4 1k
+	
+	m1 3 1 d d MOSP
+	m2 3 2 d d MOSP
+	m3 5 4 d d MOSP
+
+	m4 3 2 6 0 MOSN
+	m5 6 1 0 0 MOSN
+	m6 5 4 0 0 MOSN
+.ends cmos_and
+
+
+x1 a b c1 cmos_2nand
+x2 a c1 c2 cmos_2nand
+x3 b c1 c3 cmos_2nand
+x4 c2 c3 difference cmos_2nand
+
+x5 a a not cmos_2nand
+x6 not b borrow cmos_and
+
+
+.tran 10u 50m
+.control
+run
+
+
+plot v(a) v(b)+20 v(difference)+40 v(borrow)+60
+
+
+.endc
+.end

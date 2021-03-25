@@ -1,0 +1,68 @@
+* Logic AB+C using CMOS 
+
+va a 0 PULSE(0 9.9 0 1u 1u 10m 20m)
+vb b 0 PULSE(9.9 0 0 1u 1u 20m 40m)
+vc c 0 PULSE(0 9.9 0 1u 1u 40m 80m)
+vd d 0 PULSE(9.9 0 0 1u 1u 80m 100m)
+
+
+.subckt cmos_or i1 i2 res
+* name port1 port2 port3 ...
+	.model MOSN NMOS level=8 version=3.3.0
+	.model MOSP PMOS level=8 version=3.3.0
+
+
+	vdd d 0 dc 10
+
+	r1 i1 1 1k
+	r2 i2 2 1k
+	r3 6 res 1k
+	r4 4 5 1k
+
+	m1 3 1 d d MOSP
+	m2 4 2 3 d MOSP
+	m3 6 5 d d MOSP
+
+	m4 4 1 0 0 MOSN
+	m5 6 5 0 0 MOSN
+	m6 4 2 0 0 MOSN
+.ends cmos_or
+
+.subckt cmos_and i1 i2 res
+* name port1 port2 port3 ...
+	.model MOSN NMOS level=8 version=3.3.0
+	.model MOSP PMOS level=8 version=3.3.0
+	
+	vdd d 0 dc 10
+	
+	r1 5 res 1k
+	r2 i1 1 1k
+	r3 i2 2 1k
+	r4 3 4 1k
+	
+	m1 3 1 d d MOSP
+	m2 3 2 d d MOSP
+	m3 5 4 d d MOSP
+
+	m4 3 2 6 0 MOSN
+	m5 6 1 0 0 MOSN
+	m6 5 4 0 0 MOSN
+.ends cmos_and
+
+
+x1 a b r1 cmos_and
+x2 c d r2 cmos_and
+x3 r1 r2 out cmos_or
+
+.tran 10u 160m
+.control
+run
+set color0 = white
+set color1 = black
+set color2 = blue
+set color3 = green
+set color4 = red
+set color5 = yellow
+set color6 = violet
+plot v(a) v(b)+20 v(c)+40 v(d)+60 v(out)+80
+
