@@ -21,9 +21,7 @@ vb b 0 PULSE(9.9 0 0 1u 1u 20m 35m)
 
 	m1 10 1 d d MOSP
 	m2 10 2 d d MOSP
-	
-	
-	
+		
 	m4 10 2 11 0 MOSN
 	m5 11 1 0 0 MOSN
 	
@@ -52,7 +50,6 @@ vb b 0 PULSE(9.9 0 0 1u 1u 20m 35m)
 	m6 5 4 0 0 MOSN
 .ends cmos_and
 
-
 x1 a b c1 cmos_2nand
 x2 a c1 c2 cmos_2nand
 x3 b c1 c3 cmos_2nand
@@ -61,14 +58,9 @@ x4 c2 c3 difference cmos_2nand
 x5 a a not cmos_2nand
 x6 not b borrow cmos_and
 
-
 .tran 10u 50m
 .control
 run
-
-
 plot v(a) v(b)+20 v(difference)+40 v(borrow)+60
-
-
 .endc
 .end
