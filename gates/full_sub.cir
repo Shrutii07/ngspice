@@ -1,0 +1,27 @@
+*Full Subtractor
+
+.include cmos.lib
+VA A 0 PULSE(0 5 0 0 0 10ms 20.11ms)
+VB B 0 PULSE(0 5 0 0 0 20.2ms 40ms)
+VC Bin 0 PULSE(0 5 0 0 0 40ms 80ms)
+
+X1 A B X XOR_gate
+X2 An B Z AND_gate
+X3 X Bin DIFF XOR_gate
+X4 Xn Bin Y AND_gate
+X5 Y Z Bout OR_gate
+X6 A An NOT_gate
+X7 X Xn NOT_gate
+
+TRAN 0.1ms 80ms
+.control
+run
+set color0 = white
+set color1 = black
+set color2 = blue
+set color3 = green
+set color4 = red
+set color5 = violet
+PLOT v(A)+40 v(B)+30 v(Bin)+20 v(DIFF)+10 v(Bout)
+.ENDC
+.END
