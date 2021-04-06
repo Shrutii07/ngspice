@@ -1,0 +1,27 @@
+*D flipflop negative level
+
+*NAND
+.subckt nand A B OP
+	Vdd 1 0 dc 10v
+	m1 1 A OP 1 mosp
+	m2 1 B OP 1 mosp
+	m3 OP A 3 0 mosn
+	m4 3 B 0 0 mosn
+	.model mosn nmos
+	.model mosp pmos	
+.ends
+
+Vd d 0 pulse(0 9.9 0 0 0 100ns 300ns)
+Vclk clk 0 pulse(0 9.9 0 0 0 125ns 250ns)
+X1 d d notd nand
+X2 d clk p1 nand
+X3 notd clk p2 nand
+X4 p1 notq q nand
+X5 p2 q notq nand
+
+.tran 1ns 1000ns
+.control
+run
+plot v(d) v(clk)+20 v(q)+40 v(notq)+60
+.endc
+.end
