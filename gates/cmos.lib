@@ -1,0 +1,138 @@
+* subcircuit for AND_gate XOR_gate OR_gate NOT_gate Nand_gate flipFlopD cmos_nand3
+
+.subckt AND_gate 1 3 5
+V1 6 0 dc 5
+mQ1 4 1 2 0 NMOS_Q
+mQ2 2 3 0 0 NMOS_Q
+mQ3 5 4 0 0 NMOS_Q
+mQ4 4 1 6 6 PMOS_Q
+mQ5 4 3 6 6 PMOS_Q
+mQ6 5 4 6 6 PMOS_Q
+
+.model NMOS_Q NMOS( Level=1 LAMBDA=0 RD=0 RS=0 IS=1e-14 PB=0.8 CGDO=0 CGBO=0 MJ=0.5 MJSW=0.33
++ JS=0 NSS=0 TPG=1 LD=0 U0=600 KF=0 AF=1FC=0.5 RG=0 RB=0WD=0 N=1 JSS=0 TT=0 NLEV=2 GDNOI=1)
+.model PMOS_Q PMOS( Level=1 LAMBDA=0 RD=0 RS=0 IS=1e-14 PB=0.8 CGDO=0 CGBO=0 MJ=0.5 MJSW=0.33
++ JS=0 NSS=0 TPG=1 LD=0 U0=600 KF=0 AF=1FC=0.5 RG=0 RB=0WD=0 N=1 JSS=0 TT=0 NLEV=2 GDNOI=1)
+.ends
+
+*-------------------------------------------------------------------*
+
+* subcircuit for OR-gate using cmos transistors
+
+.subckt OR_gate 4 5 6
+
+mQ1 1 4 2 2 PMOS_Q1 
+mQ2 3 5 1 1 PMOS_Q1 
+mQ3 3 4 0 0 NMOS_Q1 
+mQ4 3 5 0 0 NMOS_Q1 
+mQ5 6 3 2 2 PMOS_Q1 
+mQ6 6 3 0 0 NMOS_Q1 
+
+R1 3 0 100000
+Vcc 2 0 dc 5 ac 0 0 
+
+.model PMOS_Q1 PMOS( Level=1
++VTO=0 KP=0.00002 GAMMA=0 PHI=0.6 LAMBDA=0 RD=0 RS=0
++CBD=0 CBS=0 IS=1e-14 PB=0.8 CGSO=0 CGDO=0 CGBO=0   MJ=0.5
++ MJSW=0.33 JS=0   NSS=0 TPG=1 LD=0 U0=600 KF=0
++AF=1 FC=0.5  RG=0 RB=0 RDS=0 WD=0 N=1 JSSW=0 
++TT=0 NLEV=2 GDSNOI=1    
++ )
+.model NMOS_Q1 NMOS( Level=1
++VTO=0 KP=0.00002 GAMMA=0 PHI=0.6 LAMBDA=0 RD=0 RS=0
++CBD=0 CBS=0 IS=1e-14 PB=0.8 CGSO=0 CGDO=0 CGBO=0   MJ=0.5
++ MJSW=0.33 JS=0   NSS=0 TPG=1 LD=0 U0=600 KF=0
++AF=1 FC=0.5  RG=0 RB=0 RDS=0 WD=0 N=1 JSSW=0 
++TT=0 NLEV=2 GDSNOI=1    
++ )
+.ends 
+
+*-------------------------------------------------------------------*
+* subcircuit for XOR-gate using cmos transistors
+
+.subckt XOR_gate 8 10 6
+
+mQ1 1 7 3 3 PMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ11 7 8 3 3 PMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ12 7 8 0 0 NMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ13 9 10 3 3 PMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ14 9 10 0 0 NMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ2 6 8 1 1 PMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ3 1 9 3 3 PMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ4 6 10 1 1 PMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ5 6 7 5 5 NMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ6 5 9 0 0 NMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ7 6 8 4 4 NMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+mQ8 4 10 0 0 NMOS_Q1 L=0.0001 W=0.0001 M=1 AD=0 AS=0 PD=0 PS=0 NRD=1 NRS=1  
+vV1 3 0 dc 5 ac 0 0 
+
+.model PMOS_Q1 PMOS( Level=1
++    LAMBDA=0 RD=0 RS=0
++  IS=1e-14 PB=0.8 CGSO=0 CGDO=0 CGBO=0   MJ=0.5
++ MJSW=0.33 JS=0   NSS=0 TPG=1 LD=0 U0=600 KF=0
++AF=1 FC=0.5  RG=0 RB=0 RDS=0 WD=0 N=1 JSSW=0 
++TT=0 NLEV=2 GDSNOI=1    
++ )
+.model NMOS_Q1 NMOS( Level=1
++    LAMBDA=0 RD=0 RS=0
++  IS=1e-14 PB=0.8 CGSO=0 CGDO=0 CGBO=0   MJ=0.5
++ MJSW=0.33 JS=0   NSS=0 TPG=1 LD=0 U0=600 KF=0
++AF=1 FC=0.5  RG=0 RB=0 RDS=0 WD=0 N=1 JSSW=0 
++TT=0 NLEV=2 GDSNOI=1    
++ )
+.ends
+
+*-------------------------------------------------------------------*
+* subcircuit for NOT-gate using cmos transistors
+
+.subckt NOT_gate 1 2
+vdd 3 0 dc 5v
+m1 3 1 2 3 mos1 l=10u w=100u
+.model mos1 pmos vto=1.5v kp=200u
+m2 2 1 0 0 mos2 l=10u w=200u
+.model mos2 nmos vto=1.5v kp=200u
+.ends
+
+*-------------------------------------------------------------------*
+
+
+.subckt Nand_gate in1 in2 res
+* name port1 port2  ...
+	.model MOSN NMOS level=8 version=3.3.0
+	.model MOSP PMOS level=8 version=3.3.0
+	* transistor models
+
+	vdd d 0 dc 10
+	*biasing voltage
+
+
+	r1 in1 1 1k
+	r2 in2 2 1k
+	r4 10 res 1k
+	* resistors
+
+
+	m1 10 1 d d MOSP
+	m2 10 2 d d MOSP
+	
+
+	m4 10 2 11 0 MOSN
+	m5 11 1 0 0 MOSN
+	
+	* mn drain gate source bulk model
+	* nmos bulk to ground, pmos bulk to vdd
+.ends Nand_gate
+
+*--------------------------------------------------------------------------------*
+
+.subckt cmos_nand3 in1 in2 in3 res
+ x1 in1 in2 a NAND_gate
+ x2 a a in1in2 NAND_gate
+ x3 in1in2 in3 res NAND_gate
+.ends cmos_nand3 
+
+
+
+
+
+
